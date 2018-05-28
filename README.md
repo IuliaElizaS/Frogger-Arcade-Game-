@@ -10,7 +10,7 @@ Learning project for Udacity Front-End Nanodegree
 
 ## About the project
  
-  This is a project for Udacity Front-End Web Developer Nanodegree Schoolarshipan has only learning purpose. The students are given a starter project that includes art assets and also JS code for the game engine. Students have to build the game, add functionality (basic and optional functionality) according to the project instructions.
+  This is a project for Udacity Front-End Web Developer Nanodegree Schoolarship and has only learning purpose. The students are given a starter project that includes art assets and also JS code for the game engine. Students have to build the game, add functionality (basic and optional functionality) according to the project instructions.
   I've changed a little the style and rules of the game and transformed the classic FROGGER into an ICE AGE style FROGGER
   
 ## Instructions
