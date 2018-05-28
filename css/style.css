@@ -1,0 +1,107 @@
+body {
+    font-family: cursive;
+    font-size: 1.3em;
+    text-align: center;
+    /* makes it responsive */
+    width: 100%;
+    height: 100%;
+    margin: auto;
+
+}
+
+/* Styles the Score Panel */
+.score-panel {
+    display: inline-block;
+    align-items: center;
+    width: 80%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.time {
+    display: inline-block;
+    padding-left: 2em;
+}
+
+.lives {
+    display: inline-block;
+    margin: 0;
+    padding-right: 2em;
+    display: inline-block;
+    /*margin: 0 5px 0 0;*/
+}
+
+.life {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+}
+
+.hide {
+    transform: scale(0.4, 0.4);
+    transition: transform 0.3s linear;
+}
+
+.restart {
+    display: inline-block;
+    padding-left: 2em;
+    cursor: pointer;
+
+}
+
+/* Styles the Start and Stop Modals */
+.startModal, .stopModal {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.stopModal {
+    display: none; /* Hidden by default */
+}
+
+.startModalContent, .stopModalContent {
+    display: block;
+    margin: 5%;
+    padding: 1em;
+    border: 1px solid #888;
+    border-radius: 8px;
+    width: 80%;
+    height: 80%
+}
+
+.startModalContent {
+    background-color: #ccffff;
+}
+
+.modalImg {
+    width: 35%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 2em;
+}
+
+button {
+    font: inherit;
+    border-radius: 8px;
+    width: 15%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.stopModalContent {
+    background-image: url('paper.png'); /* photo source www.freepngs.com */
+    background-size: cover;
+}
+
+.stopModalContent.h2,
+.stopModalContent.p,
+.stopModalContent.close {
+    padding-left: 3em;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Effective JavaScript: Frogger</title>
+    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <section class="startModal">
+        <div class="startModalContent">
+            <img class = "modalImg" src="images/iceAge.png" alt="picture with characters from Ice Age cartoon">
+             <!-- photo source www.freepngs.com -->
+            <span>Wellcome to the Ice Age style FROGGER!</span>
+            <p>Please help Scratt cross the stones and reach the Mountain. On his way he must not enter in collision with Sid, Buck or Diego. Achorns can be collected by Scratt, but they are counted only if he reaches the mountain with the achorn.</p>
+            <p>You have 3 minutes and 3 lives to collect as many achorns as possible.</p>
+            <p>To move Scratt you have to use the arrow keys.</p>
+            <button class="play">Play</button>
+        </div>
+    </section>
+    <section class="stopModal">
+        <div class="stopModalContent">
+            <h2> Game End!</h2>
+            <p> You've lost all your lives and you've helped Scratt to collect <span class="achorn">0</span> achorns.</p>
+            <button class="close">Restart the game</button>
+        </div>
+    </section>
+    <section class="score-panel">
+        <div class="lives">
+              <img class="life" src="images/Heart.png" alt="first life">
+              <img class="life" src="images/Heart.png" alt="second life">
+              <img class="life" src="images/Heart.png" alt="third life">
+        </div>
+
+        <span class="achorn">0 </span> achorns
+        <span class="time">0m 0s</span>
+
+        <div class="restart">
+            <i class="fa fa-repeat"></i>
+        </div>
+    </section>
+    <script src="js/resources.js"></script>
+    <!-- functionalities -->
+    <script src="js/app.js"></script>
+    <!-- The engine for the game -->
+    <script src="js/engine.js"></script>
+</body>
+</html>
