@@ -1,10 +1,16 @@
+//selects the achorn class elements and adds them in an array
 let achorns = document.querySelectorAll('.achorn');
 let achornsList = Array.from(achorns);
 let achornsCount = 0;
 
+//selects the life class elements and adds them in an array
 let lives = document.querySelectorAll('.life');
 let livesList = Array.from(lives);
 let life = 3;
+
+//declares the audio variables
+const step = new Audio('sounds/zapsplat_foley_feet_barefoot_scuff_single_carpet_on_wood_floor_004_20008.mp3');//sound source  https://www.zapsplat.com
+const contact = new Audio('sounds/zapsplat_multimedia_click_002_19368.mp3');//sound source  https://www.zapsplat.com
 
 // Enemies our player must avoid
 class Enemy {
@@ -18,6 +24,8 @@ class Enemy {
       this.x = x; // x coordinate
       this.y = y; // y coordinate
       this.speed = speed; // moving speed
+      this.height = 101; // enemy's height
+      this.width = 101; //enemy's width
     }
 
     // Update the enemy's position, required method for game
@@ -29,28 +37,14 @@ class Enemy {
       this.x = this.x + (this.speed * dt);
       if (this.x > 505) {
           this.x = -100;
-      };
-    }
-
-    checkCollisions(){
-      // checks if player enters in collision with enemy
-      if (this.x === player.x & this.y === player.y) {
-          //moves the player back to it's start position
-          player.x = 250;
-          player.y = 498;
-          //changes the player image
-          player.sprite = 'char.png';
-          //deletes one life
-          life --;
-          livesCount();
-        };
+      }
     }
 
     // Draw the enemy on the screen, required method for game
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
-  };
+  }
 
 // Now write your own player class
 class Player {
@@ -58,29 +52,36 @@ class Player {
       this.sprite = sprite;
       this.x = x;
       this.y = y;
+      this.height = 101;
+      this.width = 101;
     }
 
     // This class requires an update(), render() and
     // a handleInput() method.
     update(dt) {
-        //if player enters in collision with the colectable item
-        if (this.x === colectable.x & this.y === colectable.y) {
-              this.sprite = 'char-with-achorn.png'; // changes the player image
-              //moves the collectable item outside of the canvas
-              colectable.x = -101;
-              colectable.y = -83;
-        };
-        //checks if player reaches the mountain
-        if (this.y <= 83){
-              //checks if player has the colectable item
-              if (this.sprite === 'char-with-achorn.png'){
-                achornCount(); // calls the colectable counter
-                this.sprite = 'char.png'//changes the player's image
-              };
-              this.y = 498; // moves the player on the last row (on the grass)
-              //moves the collectable item back on the canvas
-              colectable.randomPosition();
-          };
+      // checks if player enters in collision with the collectible item
+      // updated alghoritm from https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+      if (this.x < collectible.x + collectible.width &&
+          this.x + this.width > collectible.x &&
+          this.y < collectible.y + collectible.height &&
+          this.height + this.y > collectible.y) {
+              contact.play();//plays a sound on collision
+              this.sprite = 'images/char-with-achorn.png'; // changes the player image
+              //moves the collectible item outside of the canvas
+              collectible.x = -101;
+              collectible.y = -101;
+        }
+        //checks if player reaches the earth
+        if (this.y <= 0){
+              //checks if player has the collectible item
+              if (this.sprite === 'images/char-with-achorn.png'){
+                achornCount(); // calls the collectible counter
+                this.sprite = 'images/char.png';//changes the player's image
+              }
+              this.y = 505; // moves the player on the last row (on the grass)
+              //moves the collectible item back on the canvas
+              collectible.update();
+          }
       }
 
       //draws the player on the screen
@@ -88,66 +89,72 @@ class Player {
           ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
       }
 
-      handleInput() {
-      // checks which key was pressed moves the player
-        switch (allowedKeys[e.keyCode]) {
-            case 37 : if (this.x >= 101) {
-                          this.x = this.x - 101;
-                        };  // moves the player to left if it doesn't cross the canvas' margin
+      handleInput(key) {
+      // checks which key was pressed and moves the player
+        switch (key) {
+            case 'left' : if (this.x > 0) {
+                          this.x = this.x - 101; // moves the player to left if it doesn't cross the canvas' margin
+                          step.play();//plays a sound for each step
+                        }
             break;
-            case 38 : if (this.y >= 83) {
-                        this.y = this.y - 83;
-                      }; // moves the player up if it doesn't cross the canvas' margin
+            case 'up' : if (this.y > 0) {
+                        this.y = this.y - 101;// moves the player up if it doesn't cross the canvas' margin
+                        step.play();//plays a sound for each step
+                      }
             break;
-            case 39 : if (this.x <= 404) {
-                          this.x = this.x + 101;
-                      }; // moves the player right if it doesn't cross the canvas' margin
+            case 'right' : if (this.x < 404) {
+                          this.x = this.x + 101;// moves the player right if it doesn't cross the canvas' margin
+                          step.play();//plays a sound for each step
+                      }
             break;
-            case 40 : if (this.y <= 415) {
-                          this.y = this.y - 83;
-                      }; // moves the player down if it doesn't cross the canvas' margin
-            };
+            case 'down' : if (this.y < 505) {
+                          this.y = this.y + 101;// moves the player down if it doesn't cross the canvas' margin
+                          step.play();//plays a sound for each step
+                      }
+            }
       }
-  };
+  }
 
 //colectable item class
-class Colectable {
+class Collectible {
     constructor  (x,y){
         this.sprite = 'images/achornSmall.png';
         this.x = x;
         this.y = y;
+        this.height = 60; // collectibble item's height
+        this.width = 60; //collectibble item's width
     }
 
-    //sets a random position for the colectable
-    randomPosition() {
+    //sets a random position for the collectible
+    update() {
         // sets a random x position
         const minX = 0;
         const maxX = 404;
         this.x= Math.floor(Math.random() * (maxX - minX + 1)) + minX; //radom method from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
         // sets a random y position
-        const minY = 83;
-        const maxY = 415;
+        const minY = 101;
+        const maxY = 505;
         this.y= Math.floor(Math.random() * (maxY - minY + 1)) + minY; //radom method from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     }
 
-    //draws the colectable on the screen
+    //draws the collectible on the screen
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
-};
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-let enemy1 = new Enemy('images/enemy1.png', 120, 84, 3);
-let enemy2 = new Enemy('images/enemy2.png', 280, 167, 2);
-let enemy3 = new Enemy('images/enemy3.png', 0, 250, 5);
-let allEnemies = ['enemy1', 'enemy2', 'enemy3'];
+let enemy1 = new Enemy('images/enemy1.png', 50,101, 75);
+let enemy2 = new Enemy('images/enemy2.png', 252, 202, 40);
+let enemy3 = new Enemy('images/enemy3.png', 330, 303, 55);
+let allEnemies = [enemy1, enemy2, enemy3];
 
 // Place the player object in a variable called player
-let player = new Player('char.png', 250, 498);
+let player = new Player('images/char.png', 202,505);
 
-// Place the colectable object in a variable called colectable
-let colectable = new Colectable();
+// Place the collectible object in a variable called collectible
+let collectible = new Collectible(101,303);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -162,29 +169,53 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+// checks if player enters in collision with the enemies
+function checkCollisions(){
+    allEnemies.forEach(function (enemy){
+      // adapted alghoritm from https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+      if (enemy.x < player.x + player.width &&
+          enemy.x + enemy.width > player.x &&
+          enemy.y < player.y + player.height &&
+          enemy.height + enemy.y > player.y) {
+          //plays a sound on collision
+          contact.play();
+          //moves the player back to it's start position
+          player.x = 202;
+          player.y = 505;
+          //changes the player image
+          player.sprite = 'images/char.png';
+          //deletes one life
+          life --;
+          livesCount();
+        }
+    });
+}
+
 //runs the timer
+let counter;
 function timeCount(){
     let timer = document.querySelector('.time');
-    let counter;
-    let sec = 59;
-    let min = 2;
+    let sec = 0;
+    let min = 3;
 
     counter = setInterval(function(){
+        //if the 3 minutes expired, stops the timer and calls stopModal()
+        if (min < 0 && sec < 0){
+            console.log('end of time');//just for debug purpose
+            clearInterval(counter, 1000);
+            stopModal();
+        } else { //else continues counting down
         sec--;
-        if (sec === 0){
+        };
+        if (sec < 0){
             min--;
             sec = 59;
         };
         timer.innerText = min +'m '+ sec + 's';
     }, 1000);
-    //if the 3 minutes expired, stops the timer and calls stopModal()
-    if (min === 0 & sec === 0) {
-        clearInterval(counter,1000);
-        stopModal();
-    };
-  };
+}
 
-//counts the achorns if the player reaches the mountain after collecting the achorn
+//counts the achorns if the player reaches the earth after collecting the achorn
 function achornCount(){
    achornsCount ++;
    achornsList[0].innerText = achornsCount;
@@ -199,10 +230,10 @@ function livesCount() {
         livesList[1].classList.add('hide');
     } else if (life === 0) {
         livesList[0].classList.add('hide');
-    } else if (life === -1) {
+        clearInterval(counter, 1000);
         stopModal();
     }
-};
+}
 
 //resets the game
 function reset() {
@@ -218,8 +249,8 @@ function startModal() {
         startModal.style.display = "none";
         //starts the timer
         timeCount();
-    }
-  };
+    };
+  }
 startModal();
 
 //implements the stop modal
@@ -231,8 +262,8 @@ function stopModal() {
     restartButton.onclick = function() {
         stopModal.style.display = "none";
         reset();
-    }
-};
+    };
+}
 
 //adds EventListener to the restart arrow
 const restart = document.querySelector('.restart');
