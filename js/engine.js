@@ -78,7 +78,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
@@ -91,7 +91,6 @@ var Engine = (function(global) {
 
 
     function updateEntities(dt) {
-        console.log(allEnemies);// just for debug purpose
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
@@ -109,12 +108,12 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/mountain.png',   // Top row is mountain
-                'images/stone-road.png',   // Row 1 of 3 of stone
-                'images/stone-road.png',   // Row 2 of 3 of stone
-                'images/stone-road.png',   // Row 3 of 3 of stone
-                'images/grass.png',   // Row 1 of 2 of grass
-                'images/grass.png'    // Row 2 of 2 of grass
+                'images/earth.png',   // Top row is earth
+                'images/ice.png',   // Row 1 of 3 of ice
+                'images/ice.png',   // Row 2 of 3 of ice
+                'images/ice.png',   // Row 3 of 3 of ice
+                'images/ice.png',   // Row 4 of 4 of ice
+                'images/grass.png'    // last row is grass
             ],
             numRows = 6,
             numCols = 5,
@@ -136,7 +135,7 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 101);
             }
         }
 
@@ -156,6 +155,7 @@ var Engine = (function(global) {
         });
 
         player.render();
+        collectible.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -169,8 +169,8 @@ var Engine = (function(global) {
      * all of these images are properly loaded our game will start.
      */
     Resources.load([
-        'images/stone-road.png', // photo source  www.all-free-download.com
-        'images/mountain.png', // photo source www.pngtree.com
+        'images/earth.png', // photo source  www.all-free-download.com
+        'images/ice.png', // photo source www.all-free-download.com
         'images/grass.png', // photo source  www.all-free-download.com
         'images/enemy1.png', // photo source www.freepngs.com
         'images/enemy2.png', // photo source www.freepngs.com
