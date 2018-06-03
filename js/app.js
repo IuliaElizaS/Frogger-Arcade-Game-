@@ -200,7 +200,7 @@ function timeCount(){
 
     counter = setInterval(function(){
         //if the 3 minutes expired, stops the timer and calls stopModal()
-        if (min < 0 && sec < 0){
+        if (min === 0 && sec === 0){
             console.log('end of time');//just for debug purpose
             clearInterval(counter, 1000);
             stopModal();
