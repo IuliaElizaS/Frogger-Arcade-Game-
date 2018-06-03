@@ -69,12 +69,12 @@ body {
 
 .startModalContent {
     background-color: #ccffff;
-    display: inline-flexblock;
+    display: inline-flex;
     margin: 5%;
     padding: 1em;
     border: 1px solid #888;
     border-radius: 8px;
-    width: 80%;
+    width: 85%;
     height: 80%;
 }
 
@@ -87,7 +87,7 @@ body {
 }
 
 .modalImg {
-    width: 35%;
+    width: 30%;
     display: block;
     margin-left: auto;
     margin-right: auto;
