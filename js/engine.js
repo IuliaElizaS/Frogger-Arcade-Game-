@@ -170,7 +170,7 @@ var Engine = (function(global) {
      */
     Resources.load([
         'images/earth.png', // photo source  www.all-free-download.com
-        'images/ice.png', // photo source www.all-free-download.com
+        'images/ice.jpg', // photo source www.pixabay.com
         'images/grass.png', // photo source  www.all-free-download.com
         'images/enemy1.png', // photo source www.freepngs.com
         'images/enemy2.png', // photo source www.freepngs.com
