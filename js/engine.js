@@ -109,10 +109,10 @@ var Engine = (function(global) {
          */
         var rowImages = [
                 'images/earth.png',   // Top row is earth
-                'images/ice.png',   // Row 1 of 3 of ice
-                'images/ice.png',   // Row 2 of 3 of ice
-                'images/ice.png',   // Row 3 of 3 of ice
-                'images/ice.png',   // Row 4 of 4 of ice
+                'images/ice.jpg',   // Row 1 of 3 of ice
+                'images/ice.jpg',   // Row 2 of 3 of ice
+                'images/ice.jpg',   // Row 3 of 3 of ice
+                'images/ice.jpg',   // Row 4 of 4 of ice
                 'images/grass.png'    // last row is grass
             ],
             numRows = 6,
